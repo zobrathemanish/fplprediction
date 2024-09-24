@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manish Dangi - FPL Prediction V1</title>
+    <!-- DataTables CSS and jQuery -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('https://img.freepik.com/free-vector/gradient-football-field-background_23-2149013356.jpg?w=1800&t=st=1726994141~exp=1726994741~hmac=a47b5cc7e8430b23791308c5c62dc0de9491fa3724099e485ba9901dccbe08cb') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            opacity: 0.95; /* Slight transparency for a smoother overlay */
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #d1d1d1;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background for table */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        th {
+            background-color: #003DA5; /* Chelsea blue */
+            color: white;
+            text-transform: uppercase;
+            border-bottom: 2px solid #005EB8; /* Darker blue for emphasis */
+        }
+        tr {
+            background-color: rgba(255, 255, 255, 0.5); /* More transparent rows */
+        }
+        tr:nth-child(even) {
+            background-color: rgba(240, 240, 240, 0.5); /* Slightly transparent for alternating rows */
+        }
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.1); /* Highlight on hover */
+        }
+        img {
+            width: 40px;
+            height: auto;
+            border-radius: 50%;
+        }
+        /* DataTable custom styles */
+        .dataTables_wrapper .dataTables_paginate,
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            color: white; /* Text color for pagination and length */
+        }
+        .dataTables_wrapper .dataTables_paginate a,
+        .dataTables_wrapper .dataTables_paginate span {
+            color: white; /* Make pagination links white */
+            background-color: rgba(0, 0, 0, 0.5); /* Background for pagination links */
+            padding: 5px 10px; /* Add some padding */
+            border-radius: 4px; /* Rounded corners for better appearance */
+            margin: 0 3px; /* Space between pagination buttons */
+            text-decoration: none; /* Remove underline */
+        }
+        .dataTables_wrapper .dataTables_paginate .current {
+            background-color: #003DA5; /* Highlight the current page */
+            color: white; /* Text color for current page */
+            font-weight: bold; /* Make current page bold */
+        }
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+            background-color: rgba(0, 0, 0, 0.7); /* Background for select and input */
+            color: white; /* Font color for select and input */
+            border: 1px solid #fff; /* Border color */
+        }
+        .dataTables_wrapper .dataTables_filter input::placeholder {
+            color: #ccc; /* Placeholder color */
+        }
+        @media (max-width: 600px) {
+            table {
+                font-size: 12px; /* Slightly larger font size on small screens */
+            }
+        }
+    </style>
+
+    <!-- Initialize DataTables -->
+    <script>
+        $(document).ready(function() {
+            $('#players_table').DataTable({
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                "lengthMenu": [5, 10, 25, 50],
+                "pageLength": 10
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Manish Dangi - FPL Prediction System Version 1.0</h1>
+    <h2>As of Gameweek: {{ current_gameweek }}</h2>
+    <table id="players_table" class="display">
+        <thead>
+            <tr>
+                <th>Player Photo</th>
+                <th>Player Name</th>
+                <th>Expected Points (This Round)</th>
+                <th>Expected Goals</th>
+                <th>Expected Assists</th>
+                <th>Expected Goal Involvements</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td>
+                    <img src="https://resources.premierleague.com/premierleague/photos/players/110x140/p{{ player['photo'] }}.png" alt="{{ player['web_name'] }} photo">
+                </td>
+                <td>{{ player['web_name'] }}</td>
+                <td>{{ player['ep_this'] }}</td>
+                <td>{{ player['expected_goals'] }}</td>
+                <td>{{ player['expected_assists'] }}</td>
+                <td>{{ player['expected_goal_involvements'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
